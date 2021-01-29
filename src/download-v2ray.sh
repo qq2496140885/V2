@@ -25,7 +25,7 @@ _download_v2ray_file() {
         $red 下载 V2Ray 失败啦..可能是你的 VPS 网络太辣鸡了...请重试...$none
         " && exit 1
 	fi
-
+	
 	unzip $v2ray_tmp_file -d "/tmp/v2ray/"
 	mkdir -p /usr/bin/v2ray
 	cp -f "/tmp/v2ray/v2ray" "/usr/bin/v2ray/v2ray"
@@ -36,7 +36,8 @@ _download_v2ray_file() {
 
 _install_v2ray_service() {
 	if [[ $systemd ]]; then
-		cp -f "/tmp/v2ray/systemd/v2ray.service" "/lib/systemd/system/"
+		v2ray_service_file="$(find /tmp/v2ray -name v2ray.service | head -n 1)"
+		cp -f $v2ray_service_file "/lib/systemd/system/"
 		sed -i "s/on-failure/always/" /lib/systemd/system/v2ray.service
 		systemctl enable v2ray
 	else
