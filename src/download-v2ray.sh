@@ -1,6 +1,6 @@
 _get_latest_version() {
-	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f26)"
-
+#	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep 'tag_name' | cut -d\" -f26)"
+	v2ray_latest_ver="$(curl -H 'Cache-Control: no-cache' -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | cut -d\" -f16 | awk -F/ '{print $8}')"
 	if [ $? -ne 0 ]; then
 		echo
 		echo -e " $red获取 V2Ray 最新版本失败!!!$none"
